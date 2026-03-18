@@ -91,6 +91,7 @@ export default function TemplatesPage() {
   };
 
   return (
+    <div className="h-full overflow-y-auto">
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
@@ -178,6 +179,7 @@ export default function TemplatesPage() {
           <TemplateCard key={template.id} template={template} onUse={handleUseTemplate} />
         ))}
       </div>
+    </div>
     </div>
   );
 }

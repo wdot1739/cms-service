@@ -52,6 +52,7 @@ export default function DashboardHome() {
   const greeting = hour < 12 ? '좋은 아침이에요' : hour < 18 ? '안녕하세요' : '좋은 저녁이에요';
 
   return (
+    <div className="h-full overflow-y-auto">
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8 flex items-start justify-between">
@@ -201,6 +202,7 @@ export default function DashboardHome() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

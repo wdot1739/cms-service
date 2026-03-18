@@ -35,6 +35,7 @@ export default function SettingsPage() {
   };
 
   return (
+    <div className="h-full overflow-y-auto">
     <div className="p-6 max-w-4xl mx-auto">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">설정</h1>
@@ -190,6 +191,7 @@ export default function SettingsPage() {
           </div>
         </TabsContent>
       </Tabs>
+    </div>
     </div>
   );
 }

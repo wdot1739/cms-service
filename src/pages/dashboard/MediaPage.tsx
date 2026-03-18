@@ -58,6 +58,7 @@ export default function MediaPage() {
   const totalSize = allAssets.reduce((acc, a) => acc + a.size, 0);
 
   return (
+    <div className="h-full overflow-y-auto">
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -160,6 +161,7 @@ export default function MediaPage() {
           </table>
         </div>
       )}
+    </div>
     </div>
   );
 }

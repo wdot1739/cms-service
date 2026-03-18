@@ -70,7 +70,8 @@ export default function PagesListPage() {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto" onClick={() => setActiveMenu(null)}>
+    <div className="h-full overflow-y-auto" onClick={() => setActiveMenu(null)}>
+    <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -349,6 +350,7 @@ export default function PagesListPage() {
           </table>
         </div>
       )}
+    </div>
     </div>
   );
 }
