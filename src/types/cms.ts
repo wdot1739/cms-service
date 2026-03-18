@@ -1,4 +1,5 @@
 import type { PuckPageData } from './puck';
+export type { PuckPageData };
 
 export type UserRole = 'owner' | 'editor' | 'viewer';
 export type PageStatus = 'draft' | 'published' | 'archived';

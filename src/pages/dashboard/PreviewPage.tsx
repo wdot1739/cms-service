@@ -1,4 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
+import { Render } from '@measured/puck';
+import '@measured/puck/puck.css';
+import { puckConfig } from '@/lib/puckConfig';
+import type { Data } from '@measured/puck';
 import { useCMSStore } from '@/store/cmsStore';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -44,6 +48,32 @@ export default function PreviewPage() {
   const htmlContent = page.blocks?.[0]?.content?.html as string || '';
   const themeClass = THEME_STYLES[page.themeId] || THEME_STYLES.clean;
   const proseClass = THEME_PROSE[page.themeId] || THEME_PROSE.clean;
+
+  // If page has puckData, render full-bleed Puck content
+  if (page.puckData) {
+    return (
+      <div className="min-h-screen">
+        {/* Thin preview bar */}
+        <div className="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 backdrop-blur text-white px-4 py-2 flex items-center justify-between text-sm">
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate(-1)} className="flex items-center gap-1.5 hover:text-gray-300">
+              <ArrowLeft className="w-4 h-4" /> 뒤로
+            </button>
+            <span className="text-gray-500">|</span>
+            <span className="text-gray-400">미리보기 — {page.title}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button size="sm" variant="ghost" className="text-gray-300 hover:text-white hover:bg-gray-700 h-7 text-xs gap-1" onClick={() => navigate(`/dashboard/editor/${page.id}`)}>
+              <Edit3 className="w-3.5 h-3.5" /> 편집
+            </Button>
+          </div>
+        </div>
+        <div className="pt-10">
+          <Render config={puckConfig} data={page.puckData as Data} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={cn('min-h-screen', themeClass)}>

@@ -1,11 +1,29 @@
 import type { Config } from '@measured/puck';
-
-// Blocks will be registered here by other agents
-// This file will be updated once all block components are built
+import { HeroBlock } from '@/components/blocks/HeroBlock';
+import { FeaturesBlock } from '@/components/blocks/FeaturesBlock';
+import { HowItWorksBlock } from '@/components/blocks/HowItWorksBlock';
+import { TestimonialsBlock } from '@/components/blocks/TestimonialsBlock';
+import { PricingBlock } from '@/components/blocks/PricingBlock';
+import { CTABlock } from '@/components/blocks/CTABlock';
+import {
+  TextBlock, HeadingBlock, ImageBlock,
+  QuoteBlock, DividerBlock, CodeBlock,
+} from '@/components/blocks/ContentBlocks';
 
 export const puckConfig: Config = {
   components: {
-    // HeroBlock, FeaturesBlock, etc. will be added here
+    HeroBlock,
+    FeaturesBlock,
+    HowItWorksBlock,
+    TestimonialsBlock,
+    PricingBlock,
+    CTABlock,
+    TextBlock,
+    HeadingBlock,
+    ImageBlock,
+    QuoteBlock,
+    DividerBlock,
+    CodeBlock,
   },
 };
 
