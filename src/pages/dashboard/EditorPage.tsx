@@ -67,12 +67,37 @@ export default function EditorPage() {
   }, [title, isNew, currentPageId, user, createPage, updatePage, navigate]);
 
   const handlePublish = useCallback((data: Data) => {
-    handleSave(data);
-    if (currentPageId) {
+    const puckData = data as unknown as PuckPageData;
+
+    if (isNew || !currentPageId) {
+      // Create the page first, then publish it
+      const slug = title
+        ? title.toLowerCase().replace(/[^a-z0-9가-힣\s-]/g, '').replace(/\s+/g, '-').slice(0, 60)
+        : `page-${Date.now()}`;
+      const newPage = createPage({
+        workspaceId: 'ws-1',
+        title: title || '제목 없음',
+        slug,
+        status: 'draft',
+        themeId: 'clean' as ThemeId,
+        icon: 'FileText',
+        blocks: [],
+        puckData,
+        tags: [],
+        author: user?.id || 'unknown',
+      });
+      setCurrentPageId(newPage.id);
+      publishPage(newPage.id);
+      setStatus('published');
+      navigate(`/dashboard/editor/${newPage.id}`, { replace: true });
+    } else {
+      updatePage(currentPageId, { title, puckData, blocks: [] });
       publishPage(currentPageId);
       setStatus('published');
     }
-  }, [handleSave, currentPageId, publishPage]);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  }, [title, isNew, currentPageId, user, createPage, updatePage, publishPage, navigate]);
 
   const statusInfo = STATUS_INFO[status];
   const StatusIcon = statusInfo.icon;
@@ -127,12 +152,11 @@ export default function EditorPage() {
           )}
           <Button
             size="sm"
-            disabled={status === 'published'}
             className="bg-indigo-600 hover:bg-indigo-700 text-white gap-1.5"
             onClick={() => handlePublish(currentDataRef.current)}
           >
             <Globe className="w-4 h-4" />
-            {status === 'published' ? '발행됨' : '발행하기'}
+            {status === 'published' ? '저장 & 재발행' : '발행하기'}
           </Button>
         </div>
       </div>

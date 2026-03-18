@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Page, Template, Workspace, MediaAsset, ActivityLog, PageStatus, BlockType, ThemeId } from '@/types/cms';
-import { LANDING_PAGE_PUCK_DATA, BLANK_PAGE_PUCK_DATA } from '@/lib/defaultPuckData';
+import type { Page, Template, Workspace, MediaAsset, ActivityLog, PageStatus, BlockType, ThemeId, PuckPageData } from '@/types/cms';
+import { LANDING_PAGE_PUCK_DATA } from '@/lib/defaultPuckData';
 
 const SAMPLE_TEMPLATES: Template[] = [
   {
@@ -130,7 +130,47 @@ const SAMPLE_PAGES: Page[] = [
     themeId: 'clean',
     icon: 'Home',
     blocks: SAMPLE_TEMPLATES[1].blocks,
-    puckData: BLANK_PAGE_PUCK_DATA,
+    puckData: {
+      content: [
+        {
+          type: 'HeroBlock',
+          props: {
+            title: 'Your Product Name',
+            subtitle: 'The best solution for your needs',
+            ctaText: 'Get Started',
+            ctaLink: '/login',
+            secondaryText: '',
+            background: 'gradient',
+            badge: 'Landing Page',
+            stats: [],
+          },
+        },
+        {
+          type: 'FeaturesBlock',
+          props: {
+            title: 'Why Choose Us',
+            subtitle: 'Everything you need in one platform.',
+            layout: 'grid-3',
+            features: [
+              { icon: 'Zap', title: 'Fast', description: 'Lightning-fast performance.' },
+              { icon: 'Shield', title: 'Reliable', description: 'Built for stability.' },
+              { icon: 'Layers', title: 'Scalable', description: 'Grows with your team.' },
+            ],
+          },
+        },
+        {
+          type: 'CTABlock',
+          props: {
+            title: 'Ready to Start?',
+            subtitle: 'Try for free today.',
+            ctaText: 'Try for Free',
+            ctaLink: '/login',
+            background: 'gradient',
+          },
+        },
+      ],
+      root: { props: { title: 'FlowCMS Landing Page', description: 'A sample landing page' } },
+    } as PuckPageData,
     tags: ['landing', 'marketing'],
     author: 'demo-user',
     createdAt: new Date(Date.now() - 7 * 24 * 3600000).toISOString(),
@@ -148,7 +188,29 @@ const SAMPLE_PAGES: Page[] = [
     themeId: 'clean',
     icon: 'BookOpen',
     blocks: SAMPLE_TEMPLATES[2].blocks,
-    puckData: BLANK_PAGE_PUCK_DATA,
+    puckData: {
+      content: [
+        {
+          type: 'HeadingBlock',
+          props: { text: 'Getting Started', level: 1, align: 'left', color: 'default', subtitle: 'Welcome to FlowCMS' },
+        },
+        {
+          type: 'TextBlock',
+          props: {
+            content: 'Welcome to the documentation. This guide will help you get started with FlowCMS and explore its features.',
+            align: 'left',
+            size: 'base',
+            maxWidth: 'prose',
+            color: 'default',
+          },
+        },
+        {
+          type: 'CodeBlock',
+          props: { code: 'npm install flowcms', language: 'bash', filename: 'terminal', showLineNumbers: false },
+        },
+      ],
+      root: { props: { title: 'Getting Started Guide', description: 'Learn how to use FlowCMS' } },
+    } as PuckPageData,
     tags: ['docs', 'guide'],
     author: 'demo-user',
     createdAt: new Date(Date.now() - 5 * 24 * 3600000).toISOString(),
@@ -166,7 +228,62 @@ const SAMPLE_PAGES: Page[] = [
     themeId: 'colorful',
     icon: 'Rocket',
     blocks: SAMPLE_TEMPLATES[4].blocks,
-    puckData: BLANK_PAGE_PUCK_DATA,
+    puckData: {
+      content: [
+        {
+          type: 'HeroBlock',
+          props: {
+            title: 'Product Name v2',
+            subtitle: 'The ultimate solution for modern teams',
+            ctaText: 'Learn More',
+            ctaLink: '/login',
+            secondaryText: '',
+            background: 'gradient',
+            badge: 'New Release',
+            stats: [],
+          },
+        },
+        {
+          type: 'FeaturesBlock',
+          props: {
+            title: 'Key Features',
+            subtitle: 'What makes v2 special.',
+            layout: 'grid-2',
+            features: [
+              { icon: 'Zap', title: 'Performance', description: '2x faster than before.' },
+              { icon: 'Palette', title: 'New Design', description: 'Completely redesigned UI.' },
+            ],
+          },
+        },
+        {
+          type: 'TestimonialsBlock',
+          props: {
+            title: 'What customers say',
+            subtitle: '',
+            background: 'white',
+            columns: 2,
+            testimonials: [
+              { name: 'Jane Doe', title: 'CTO', text: 'Amazing product upgrade!', rating: 5, avatarSeed: 'jane' },
+              { name: 'John Kim', title: 'Developer', text: 'The new features are incredible.', rating: 5, avatarSeed: 'john' },
+            ],
+          },
+        },
+        {
+          type: 'PricingBlock',
+          props: {
+            title: 'Simple Pricing',
+            subtitle: 'Choose the plan that fits your needs.',
+            background: 'gray',
+            plans: [
+              { name: 'Free', price: '$0', period: '/mo', description: 'For individuals', features: ['5 pages', 'Basic templates'], featured: false },
+              { name: 'Pro', price: '$15', period: '/mo', description: 'For teams', features: ['Unlimited pages', 'All templates', 'Priority support'], featured: true },
+              { name: 'Enterprise', price: 'Contact', period: '', description: 'For organizations', features: ['Everything in Pro', 'SSO', 'Dedicated support'], featured: false },
+            ],
+          },
+        },
+      ],
+      root: { props: { title: 'Product Announcement', description: 'Introducing Product v2' } },
+    } as PuckPageData,
     tags: ['product', 'announcement'],
     author: 'demo-user',
     createdAt: new Date(Date.now() - 2 * 24 * 3600000).toISOString(),
@@ -343,9 +460,9 @@ export const useCMSStore = create<CMSState>()(
     }),
     {
       name: 'flowcms-data',
-      version: 3,
+      version: 4,
       migrate: (persistedState: unknown, version: number) => {
-        if (version < 3) {
+        if (version < 4) {
           return undefined as unknown as CMSState;
         }
         return persistedState as CMSState;

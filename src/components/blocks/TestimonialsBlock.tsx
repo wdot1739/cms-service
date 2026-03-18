@@ -29,7 +29,7 @@ export function TestimonialsBlockComponent({
     : 'grid-cols-1 md:grid-cols-2';
 
   return (
-    <section className={`py-24 ${background === 'gray' ? 'bg-gray-50' : 'bg-white'}`}>
+    <section id="testimonials" className={`py-24 ${background === 'gray' ? 'bg-gray-50' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-indigo-600 font-semibold text-sm uppercase tracking-wider mb-3">Testimonials</p>
