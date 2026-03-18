@@ -162,7 +162,7 @@ export default function EditorPage() {
       </div>
 
       {/* Puck editor fills remaining space */}
-      <div className="flex-1 overflow-hidden [&_.puck-root]:h-full [&_.puck]:h-full">
+      <div className="flex-1 min-h-0 overflow-hidden [&_.Puck]:h-full [&_.PuckLayout]:h-full [&_.PuckLayout-inner]:h-full">
         <Puck
           config={puckConfig}
           data={initialData}

@@ -135,11 +135,13 @@ const SAMPLE_PAGES: Page[] = [
         {
           type: 'HeroBlock',
           props: {
+            id: 'hero-page1-1',
             title: 'Your Product Name',
             subtitle: 'The best solution for your needs',
             ctaText: 'Get Started',
             ctaLink: '/login',
             secondaryText: '',
+            secondaryLink: '',
             background: 'gradient',
             badge: 'Landing Page',
             stats: [],
@@ -148,6 +150,7 @@ const SAMPLE_PAGES: Page[] = [
         {
           type: 'FeaturesBlock',
           props: {
+            id: 'features-page1-1',
             title: 'Why Choose Us',
             subtitle: 'Everything you need in one platform.',
             layout: 'grid-3',
@@ -161,10 +164,13 @@ const SAMPLE_PAGES: Page[] = [
         {
           type: 'CTABlock',
           props: {
+            id: 'cta-page1-1',
             title: 'Ready to Start?',
             subtitle: 'Try for free today.',
             ctaText: 'Try for Free',
             ctaLink: '/login',
+            secondaryText: '',
+            secondaryLink: '',
             background: 'gradient',
           },
         },
@@ -460,12 +466,13 @@ export const useCMSStore = create<CMSState>()(
     }),
     {
       name: 'flowcms-data',
-      version: 5,
-      migrate: (persistedState: unknown, version: number) => {
-        if (version < 5) {
-          return undefined as unknown as CMSState;
+      version: 6,
+      migrate: (_persistedState: unknown, version: number) => {
+        if (version < 6) {
+          // Force full reset to pick up new sample data and fixed puckData IDs
+          return null as unknown as CMSState;
         }
-        return persistedState as CMSState;
+        return _persistedState as CMSState;
       },
     }
   )
