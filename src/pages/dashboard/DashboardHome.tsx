@@ -7,6 +7,7 @@ import {
   FileText, Eye, TrendingUp, Plus, ArrowRight,
   Clock, Globe, Edit3, BarChart2, Sparkles,
 } from 'lucide-react';
+import { PageIcon } from '@/components/editor/IconPicker';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
@@ -116,8 +117,8 @@ export default function DashboardHome() {
               const status = STATUS_CONFIG[page.status];
               return (
                 <div key={page.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors group">
-                  <div className="text-2xl w-10 h-10 flex items-center justify-center bg-gray-50 rounded-lg flex-shrink-0">
-                    {page.icon || '📄'}
+                  <div className="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-lg flex-shrink-0">
+                    <PageIcon name={page.icon || 'FileText'} size={24} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">

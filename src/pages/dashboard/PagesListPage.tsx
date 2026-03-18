@@ -306,7 +306,7 @@ export default function PagesListPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <span className="text-xl">{page.icon || '📄'}</span>
+                        <PageIcon name={page.icon || 'FileText'} size={24} />
                         <div>
                           <p
                             className="font-medium text-gray-900 text-sm hover:text-indigo-600 cursor-pointer"

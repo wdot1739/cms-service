@@ -1,3 +1,5 @@
+import type { PuckPageData } from './puck';
+
 export type UserRole = 'owner' | 'editor' | 'viewer';
 export type PageStatus = 'draft' | 'published' | 'archived';
 export type ThemeId = 'clean' | 'dark' | 'colorful' | 'minimal' | 'corporate';
@@ -45,6 +47,7 @@ export interface Page {
   coverImage?: string;
   icon?: string;
   blocks: ContentBlock[];
+  puckData?: PuckPageData;
   templateId?: string;
   tags: string[];
   author: string;

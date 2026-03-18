@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Page, Template, Workspace, MediaAsset, ActivityLog, PageStatus, BlockType, ThemeId } from '@/types/cms';
+import { LANDING_PAGE_PUCK_DATA, BLANK_PAGE_PUCK_DATA } from '@/lib/defaultPuckData';
 
 const SAMPLE_TEMPLATES: Template[] = [
   {
@@ -127,8 +128,9 @@ const SAMPLE_PAGES: Page[] = [
     slug: 'landing',
     status: 'published',
     themeId: 'clean',
-    icon: '🏠',
+    icon: 'Home',
     blocks: SAMPLE_TEMPLATES[1].blocks,
+    puckData: BLANK_PAGE_PUCK_DATA,
     tags: ['landing', 'marketing'],
     author: 'demo-user',
     createdAt: new Date(Date.now() - 7 * 24 * 3600000).toISOString(),
@@ -144,8 +146,9 @@ const SAMPLE_PAGES: Page[] = [
     slug: 'getting-started',
     status: 'published',
     themeId: 'clean',
-    icon: '📚',
+    icon: 'BookOpen',
     blocks: SAMPLE_TEMPLATES[2].blocks,
+    puckData: BLANK_PAGE_PUCK_DATA,
     tags: ['docs', 'guide'],
     author: 'demo-user',
     createdAt: new Date(Date.now() - 5 * 24 * 3600000).toISOString(),
@@ -161,8 +164,9 @@ const SAMPLE_PAGES: Page[] = [
     slug: 'product-v2',
     status: 'draft',
     themeId: 'colorful',
-    icon: '🚀',
+    icon: 'Rocket',
     blocks: SAMPLE_TEMPLATES[4].blocks,
+    puckData: BLANK_PAGE_PUCK_DATA,
     tags: ['product', 'announcement'],
     author: 'demo-user',
     createdAt: new Date(Date.now() - 2 * 24 * 3600000).toISOString(),
@@ -176,7 +180,7 @@ const SAMPLE_PAGES: Page[] = [
     slug: 'landing-page',
     status: 'published' as PageStatus,
     themeId: 'clean' as ThemeId,
-    icon: '🏠',
+    icon: 'Home',
     blocks: [
       {
         id: 'block-landing-main',
@@ -212,6 +216,7 @@ const SAMPLE_PAGES: Page[] = [
         order: 0,
       },
     ],
+    puckData: LANDING_PAGE_PUCK_DATA,
     tags: ['landing', 'tutorial', 'demo'],
     author: 'demo-user',
     createdAt: new Date(Date.now() - 14 * 24 * 3600000).toISOString(),
