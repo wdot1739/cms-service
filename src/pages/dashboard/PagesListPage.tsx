@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useCMSStore } from '@/store/cmsStore';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -12,6 +12,7 @@ import {
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
+import { PageIcon } from '@/components/editor/IconPicker';
 import type { Page, PageStatus } from '@/types/cms';
 
 const STATUS_CONFIG: Record<PageStatus, { label: string; className: string }> = {
@@ -25,8 +26,9 @@ type ViewMode = 'grid' | 'list';
 
 export default function PagesListPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { pages, deletePage, publishPage, duplicatePage } = useCMSStore();
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(searchParams.get('q') || '');
   const [statusFilter, setStatusFilter] = useState<PageStatus | 'all'>('all');
   const [sortBy, setSortBy] = useState<SortKey>('updatedAt');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -199,7 +201,7 @@ export default function PagesListPage() {
                   className="h-36 rounded-t-xl bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center relative overflow-hidden"
                   onClick={() => navigate(`/dashboard/editor/${page.id}`)}
                 >
-                  <span className="text-5xl">{page.icon || '📄'}</span>
+                  <PageIcon name={page.icon || 'FileText'} size={48} />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors" />
                 </div>
 

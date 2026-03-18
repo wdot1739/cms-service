@@ -96,9 +96,13 @@ export default function TemplatesPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-2">
           <h1 className="text-2xl font-bold text-gray-900">템플릿 갤러리</h1>
-          <Button variant="outline" className="gap-2 border-dashed text-gray-500" disabled>
+          <Button
+            variant="outline"
+            className="gap-2 text-gray-600"
+            onClick={() => navigate('/dashboard/editor/new')}
+          >
             <Plus className="w-4 h-4" />
-            커스텀 템플릿 (준비 중)
+            빈 페이지 만들기
           </Button>
         </div>
         <p className="text-gray-500">전문적으로 제작된 템플릿으로 빠르게 시작하세요.</p>

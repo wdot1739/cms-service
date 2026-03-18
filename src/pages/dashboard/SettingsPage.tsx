@@ -23,6 +23,8 @@ export default function SettingsPage() {
   const { user } = useAuthStore();
   const { workspace, setWorkspace } = useCMSStore();
   const [saved, setSaved] = useState(false);
+  const [profileSaved, setProfileSaved] = useState(false);
+  const [profileName, setProfileName] = useState(user?.name || '');
   const [wsName, setWsName] = useState(workspace.name);
   const [selectedTheme, setSelectedTheme] = useState<ThemeId>(workspace.themeId);
 
@@ -68,14 +70,24 @@ export default function SettingsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <Label>이름</Label>
-                <Input defaultValue={user?.name} className="h-10" readOnly />
+                <Input value={profileName} onChange={(e) => setProfileName(e.target.value)} className="h-10" />
               </div>
               <div className="space-y-1.5">
                 <Label>이메일</Label>
                 <Input defaultValue={user?.email} type="email" className="h-10" readOnly />
               </div>
             </div>
-            <p className="text-xs text-gray-400">데모 계정에서는 프로필 편집이 제한됩니다.</p>
+            <div className="pt-2">
+              <Button
+                onClick={() => {
+                  setProfileSaved(true);
+                  setTimeout(() => setProfileSaved(false), 2000);
+                }}
+                className="bg-indigo-600 hover:bg-indigo-700 text-white gap-2"
+              >
+                {profileSaved ? <><CheckCircle2 className="w-4 h-4" /> 저장됨!</> : '변경사항 저장'}
+              </Button>
+            </div>
           </div>
         </TabsContent>
 
@@ -124,10 +136,9 @@ export default function SettingsPage() {
           <div className="bg-white rounded-xl border border-gray-100 p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="font-semibold text-gray-900">팀원 목록</h3>
-              <Button size="sm" className="bg-indigo-600 text-white gap-2" disabled>
-                <Users className="w-4 h-4" />
-                팀원 초대 (준비 중)
-              </Button>
+              <div className="text-sm text-gray-500 bg-gray-50 rounded-lg px-4 py-2.5 border border-gray-100">
+                팀원 초대 기능은 Pro 플랜에서 사용 가능합니다.
+              </div>
             </div>
             {workspace.members.map((member) => (
               <div key={member.userId} className="flex items-center gap-4 py-3 border-b last:border-0 border-gray-50">

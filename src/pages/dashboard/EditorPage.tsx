@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import EditorToolbar from '@/components/editor/EditorToolbar';
 import PageSettingsPanel from '@/components/editor/PageSettingsPanel';
+import IconPicker from '@/components/editor/IconPicker';
 import {
   Save, Globe, Eye, ChevronLeft, Settings2,
   CheckCircle2, Clock, AlertCircle,
@@ -31,7 +32,7 @@ export default function EditorPage() {
   const [slug, setSlug] = useState(existingPage?.slug || '');
   const [status, setStatus] = useState<PageStatus>(existingPage?.status || 'draft');
   const [themeId, setThemeId] = useState<ThemeId>(existingPage?.themeId || 'clean');
-  const [icon, setIcon] = useState(existingPage?.icon || '📄');
+  const [icon, setIcon] = useState(existingPage?.icon || 'FileText');
   const [tags, setTags] = useState<string[]>(existingPage?.tags || []);
   const [seoTitle, setSeoTitle] = useState(existingPage?.seoTitle || '');
   const [seoDescription, setSeoDescription] = useState(existingPage?.seoDescription || '');
@@ -121,15 +122,6 @@ export default function EditorPage() {
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <div className="flex items-center gap-2">
-            <span className="text-xl">{icon}</span>
-            <input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="페이지 제목"
-              className="text-lg font-semibold text-gray-900 bg-transparent border-none outline-none placeholder:text-gray-400 min-w-48"
-            />
-          </div>
         </div>
 
         <div className="flex items-center gap-2">
@@ -196,13 +188,7 @@ export default function EditorPage() {
             <div className="max-w-4xl mx-auto">
               <div className="px-8 pt-8 pb-4">
                 <div className="flex items-center gap-2 mb-4">
-                  <button className="text-3xl hover:scale-110 transition-transform" onClick={() => {
-                    const emojis = ['📄', '📝', '🚀', '💡', '🎯', '📊', '🌟', '🔥', '💎', '🎨'];
-                    const current = emojis.indexOf(icon);
-                    setIcon(emojis[(current + 1) % emojis.length]);
-                  }}>
-                    {icon}
-                  </button>
+                  <IconPicker value={icon} onChange={setIcon} />
                 </div>
                 <input
                   value={title}

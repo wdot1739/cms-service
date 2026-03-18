@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 import { useCMSStore } from '@/store/cmsStore';
@@ -25,7 +25,22 @@ export default function DashboardLayout() {
   const { user, logout } = useAuthStore();
   const { workspace, pages } = useCMSStore();
   const [collapsed, setCollapsed] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('flowcms-dark') === 'true';
+  });
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+    localStorage.setItem('flowcms-dark', String(darkMode));
+  }, [darkMode]);
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && searchQuery.trim()) {
+      navigate(`/dashboard/pages?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery('');
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -164,6 +179,9 @@ export default function DashboardLayout() {
               <input
                 type="search"
                 placeholder="페이지, 템플릿 검색..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearch}
                 className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-colors"
               />
             </div>
@@ -179,7 +197,6 @@ export default function DashboardLayout() {
             </button>
             <button className="relative p-2 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors">
               <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-indigo-500 rounded-full" />
             </button>
             <button className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors">
               <HelpCircle className="w-5 h-5" />

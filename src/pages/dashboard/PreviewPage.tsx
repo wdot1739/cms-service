@@ -56,6 +56,11 @@ export default function PreviewPage() {
           </button>
           <span className="text-gray-600">|</span>
           <span className="text-gray-400">미리보기 모드</span>
+          {page.id === 'page-landing' && (
+            <Badge variant="outline" className="text-[10px] border-indigo-500/50 text-indigo-400">
+              FlowCMS로 제작됨
+            </Badge>
+          )}
           <Badge variant="outline" className={cn(
             'text-[10px]',
             page.status === 'published' ? 'border-green-500/50 text-green-400' : 'border-yellow-500/50 text-yellow-400'
@@ -85,6 +90,13 @@ export default function PreviewPage() {
           )}
         </div>
       </div>
+
+      {/* Landing page banner */}
+      {page.id === 'page-landing' && (
+        <div className="bg-indigo-600 text-white text-center py-2 text-sm font-medium">
+          이 페이지는 FlowCMS로 제작되었습니다 — 에디터를 열어 직접 수정해보세요
+        </div>
+      )}
 
       {/* Page content */}
       <div className="max-w-4xl mx-auto px-6 py-16">
@@ -130,6 +142,15 @@ export default function PreviewPage() {
           </div>
         )}
       </div>
+
+      {/* Floating edit button */}
+      <button
+        onClick={() => navigate(`/dashboard/editor/${page.id}`)}
+        className="fixed bottom-6 right-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:shadow-xl transition-all z-50"
+        title="편집하기"
+      >
+        <Edit3 className="w-5 h-5" />
+      </button>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Page, Template, Workspace, MediaAsset, ActivityLog } from '@/types/cms';
+import type { Page, Template, Workspace, MediaAsset, ActivityLog, PageStatus, BlockType, ThemeId } from '@/types/cms';
 
 const SAMPLE_TEMPLATES: Template[] = [
   {
@@ -72,6 +72,51 @@ const SAMPLE_TEMPLATES: Template[] = [
       { id: 'b4', type: 'pricing', content: { plans: ['Free', 'Pro', 'Enterprise'] }, order: 3 },
     ],
   },
+  {
+    id: 'tpl-landing-full',
+    name: '랜딩 페이지 (전체)',
+    description: 'FlowCMS 랜딩 페이지와 동일한 구조의 전체 마케팅 페이지',
+    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop',
+    category: 'landing',
+    tags: ['landing', 'marketing', 'full-page'],
+    isDefault: true,
+    blocks: [
+      {
+        id: 'tpl-lf-1',
+        type: 'hero',
+        content: {
+          html: '<h1>제품 이름</h1><p>제품의 핵심 가치를 한 줄로 설명하세요</p>',
+          title: '제품 이름',
+          subtitle: '제품의 핵심 가치를 한 줄로 설명하세요',
+        },
+        order: 0,
+      },
+      {
+        id: 'tpl-lf-2',
+        type: 'features',
+        content: { html: '<h2>핵심 기능</h2><ul><li>기능 1</li><li>기능 2</li><li>기능 3</li></ul>' },
+        order: 1,
+      },
+      {
+        id: 'tpl-lf-3',
+        type: 'testimonial',
+        content: { html: '<h2>고객 후기</h2><blockquote><p>"정말 훌륭한 제품입니다." — 홍길동, 기업명</p></blockquote>' },
+        order: 2,
+      },
+      {
+        id: 'tpl-lf-4',
+        type: 'pricing',
+        content: { html: '<h2>요금제</h2><p><strong>Free</strong> — 무료 | <strong>Pro</strong> — 월 ₩15,000 | <strong>Enterprise</strong> — 문의</p>' },
+        order: 3,
+      },
+      {
+        id: 'tpl-lf-5',
+        type: 'cta',
+        content: { html: '<h2>지금 시작하세요</h2><p>신용카드 없이 무료로 시작하세요.</p>' },
+        order: 4,
+      },
+    ],
+  },
 ];
 
 const SAMPLE_PAGES: Page[] = [
@@ -123,6 +168,59 @@ const SAMPLE_PAGES: Page[] = [
     createdAt: new Date(Date.now() - 2 * 24 * 3600000).toISOString(),
     updatedAt: new Date(Date.now() - 1800000).toISOString(),
     viewCount: 0,
+  },
+  {
+    id: 'page-landing',
+    workspaceId: 'ws-1',
+    title: 'FlowCMS 랜딩 페이지',
+    slug: 'landing-page',
+    status: 'published' as PageStatus,
+    themeId: 'clean' as ThemeId,
+    icon: '🏠',
+    blocks: [
+      {
+        id: 'block-landing-main',
+        type: 'paragraph' as BlockType,
+        content: {
+          html: `<h1>FlowCMS - 콘텐츠 관리의 새로운 기준</h1>
+<p>이 페이지는 FlowCMS 에디터로 직접 작성된 랜딩 페이지입니다. 아래 내용을 자유롭게 수정하거나, 새 블록을 추가해보세요.</p>
+<h2>핵심 기능</h2>
+<ul>
+<li><strong>블록 기반 에디터</strong> — 드래그 앤 드롭으로 콘텐츠를 구성하세요</li>
+<li><strong>테마 &amp; 스타일</strong> — 5가지 전문 테마로 브랜드를 표현하세요</li>
+<li><strong>빠른 발행</strong> — 클릭 하나로 콘텐츠를 발행하고 CDN으로 배포하세요</li>
+<li><strong>다국어 지원</strong> — 하나의 플랫폼에서 여러 언어로 관리하세요</li>
+<li><strong>역할 기반 권한</strong> — 팀 협업을 안전하게 관리하세요</li>
+<li><strong>분석 &amp; 인사이트</strong> — 조회수, 전환율을 실시간 모니터링하세요</li>
+</ul>
+<h2>어떻게 시작하나요?</h2>
+<ol>
+<li>템플릿을 선택하거나 빈 페이지에서 시작하세요</li>
+<li>에디터로 콘텐츠를 자유롭게 편집하세요</li>
+<li>발행 버튼 하나로 전 세계에 배포하세요</li>
+</ol>
+<h2>요금제</h2>
+<p><strong>Free</strong> — 개인 프로젝트용, 최대 5개 페이지, 무료</p>
+<p><strong>Pro</strong> — 팀 협업용, 무제한 페이지, 월 ₩15,000</p>
+<p><strong>Enterprise</strong> — 대규모 조직용, SSO/SAML, 전담 지원, 문의</p>
+<h2>고객 후기</h2>
+<blockquote><p>"FlowCMS 덕분에 콘텐츠 발행 속도가 3배 빨라졌어요." — 김지영, TechCorp</p></blockquote>
+<blockquote><p>"The template system is incredible. We launched our entire product site in one day." — James Park, StartupXYZ</p></blockquote>
+<h2>지금 시작하세요</h2>
+<p>신용카드 없이 무료로 시작하세요. 언제든지 업그레이드할 수 있습니다.</p>`,
+        },
+        order: 0,
+      },
+    ],
+    tags: ['landing', 'tutorial', 'demo'],
+    author: 'demo-user',
+    createdAt: new Date(Date.now() - 14 * 24 * 3600000).toISOString(),
+    updatedAt: new Date(Date.now() - 3600000).toISOString(),
+    publishedAt: new Date(Date.now() - 13 * 24 * 3600000).toISOString(),
+    templateId: 'tpl-landing',
+    viewCount: 3842,
+    seoTitle: 'FlowCMS - 콘텐츠 관리의 새로운 기준',
+    seoDescription: 'FlowCMS로 팀의 콘텐츠를 더 빠르게 만들고, 더 쉽게 관리하고, 더 넓게 배포하세요.',
   },
 ];
 

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
   FileText, Eye, TrendingUp, Plus, ArrowRight,
-  Clock, Globe, Edit3, BarChart2,
+  Clock, Globe, Edit3, BarChart2, Sparkles,
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
@@ -67,6 +67,28 @@ export default function DashboardHome() {
           <Plus className="w-4 h-4" />
           새 페이지
         </Button>
+      </div>
+
+      {/* Tutorial Banner */}
+      <div className="mb-8 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-6 text-white">
+        <div className="flex items-start justify-between">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-5 h-5" />
+              <h2 className="font-bold text-lg">튜토리얼</h2>
+            </div>
+            <p className="text-indigo-100 text-sm mb-4">
+              이 랜딩 페이지는 FlowCMS로 제작되었습니다. 에디터를 열어 직접 수정해보세요!
+            </p>
+            <Button
+              onClick={() => navigate('/dashboard/editor/page-landing')}
+              className="bg-white text-indigo-700 hover:bg-indigo-50 gap-2 font-semibold"
+            >
+              <Edit3 className="w-4 h-4" />
+              랜딩 페이지 편집해보기
+            </Button>
+          </div>
+        </div>
       </div>
 
       {/* Stats */}
@@ -134,6 +156,7 @@ export default function DashboardHome() {
             <h2 className="font-semibold text-gray-900 mb-4">빠른 시작</h2>
             <div className="space-y-2">
               {[
+                { icon: Edit3, label: '랜딩 페이지 편집해보기', to: '/dashboard/editor/page-landing', color: 'text-white bg-indigo-600' },
                 { icon: FileText, label: '빈 페이지 만들기', to: '/dashboard/editor/new', color: 'text-indigo-600 bg-indigo-50' },
                 { icon: TrendingUp, label: '템플릿으로 시작', to: '/dashboard/templates', color: 'text-purple-600 bg-purple-50' },
                 { icon: Globe, label: '발행된 페이지 보기', to: '/dashboard/pages', color: 'text-green-600 bg-green-50' },
