@@ -1,0 +1,135 @@
+import { useParams, useNavigate } from 'react-router-dom';
+import { useCMSStore } from '@/store/cmsStore';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, Edit3, Globe } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+const THEME_STYLES = {
+  clean: 'bg-white text-gray-900',
+  dark: 'bg-gray-950 text-white',
+  colorful: 'bg-gradient-to-br from-pink-50 to-indigo-50 text-gray-900',
+  minimal: 'bg-gray-50 text-gray-800',
+  corporate: 'bg-blue-50 text-blue-950',
+};
+
+const THEME_PROSE = {
+  clean: 'prose-indigo',
+  dark: 'prose-invert prose-purple',
+  colorful: 'prose-pink',
+  minimal: 'prose-gray',
+  corporate: 'prose-blue',
+};
+
+export default function PreviewPage() {
+  const { pageId } = useParams();
+  const navigate = useNavigate();
+  const { pages } = useCMSStore();
+  const page = pages.find((p) => p.id === pageId);
+
+  if (!page) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <p className="text-6xl mb-4">🔍</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">페이지를 찾을 수 없습니다</h1>
+          <Button onClick={() => navigate('/dashboard/pages')} variant="outline" className="mt-4 gap-2">
+            <ArrowLeft className="w-4 h-4" /> 페이지 목록으로
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const htmlContent = page.blocks?.[0]?.content?.html as string || '';
+  const themeClass = THEME_STYLES[page.themeId] || THEME_STYLES.clean;
+  const proseClass = THEME_PROSE[page.themeId] || THEME_PROSE.clean;
+
+  return (
+    <div className={cn('min-h-screen', themeClass)}>
+      {/* Preview bar */}
+      <div className="sticky top-0 z-50 bg-gray-900 text-white px-4 py-2 flex items-center justify-between text-sm">
+        <div className="flex items-center gap-3">
+          <button onClick={() => navigate(-1)} className="flex items-center gap-1.5 hover:text-gray-300 transition-colors">
+            <ArrowLeft className="w-4 h-4" />
+            뒤로
+          </button>
+          <span className="text-gray-600">|</span>
+          <span className="text-gray-400">미리보기 모드</span>
+          <Badge variant="outline" className={cn(
+            'text-[10px]',
+            page.status === 'published' ? 'border-green-500/50 text-green-400' : 'border-yellow-500/50 text-yellow-400'
+          )}>
+            {page.status === 'published' ? '발행됨' : '초안'}
+          </Badge>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            variant="ghost"
+            className="text-gray-300 hover:text-white hover:bg-gray-700 gap-1.5 h-7 text-xs"
+            onClick={() => navigate(`/dashboard/editor/${page.id}`)}
+          >
+            <Edit3 className="w-3.5 h-3.5" />
+            편집
+          </Button>
+          {page.status !== 'published' && (
+            <Button
+              size="sm"
+              className="bg-green-600 hover:bg-green-500 text-white gap-1.5 h-7 text-xs"
+              onClick={() => navigate(`/dashboard/editor/${page.id}`)}
+            >
+              <Globe className="w-3.5 h-3.5" />
+              발행하기
+            </Button>
+          )}
+        </div>
+      </div>
+
+      {/* Page content */}
+      <div className="max-w-4xl mx-auto px-6 py-16">
+        <div className="mb-12">
+          <div className="text-6xl mb-6">{page.icon || '📄'}</div>
+          <h1 className="text-5xl font-bold mb-4 leading-tight">{page.title}</h1>
+          <div className="flex items-center gap-4 text-sm opacity-60">
+            <span>{page.publishedAt
+              ? new Date(page.publishedAt).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })
+              : new Date(page.updatedAt).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })
+            }</span>
+            <span>·</span>
+            <span>{page.viewCount.toLocaleString()} 조회</span>
+            {page.tags.length > 0 && (
+              <>
+                <span>·</span>
+                <div className="flex gap-1">
+                  {page.tags.map((tag) => (
+                    <span key={tag} className="px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 text-xs">{tag}</span>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {htmlContent ? (
+          <div
+            className={cn('prose prose-lg max-w-none', proseClass)}
+            dangerouslySetInnerHTML={{ __html: htmlContent }}
+          />
+        ) : (
+          <div className="text-center py-16 opacity-40">
+            <p className="text-xl">아직 콘텐츠가 없습니다.</p>
+            <Button
+              variant="outline"
+              className="mt-4 gap-2"
+              onClick={() => navigate(`/dashboard/editor/${page.id}`)}
+            >
+              <Edit3 className="w-4 h-4" />
+              편집하러 가기
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
