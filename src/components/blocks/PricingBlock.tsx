@@ -9,7 +9,7 @@ interface PricingPlan {
   price: string;
   period: string;
   description: string;
-  features: string[];
+  features: string;
   featured: boolean;
   badge?: string;
   ctaText?: string;
@@ -85,7 +85,7 @@ export function PricingBlockComponent({
                 </Button>
               </Link>
               <ul className="space-y-3">
-                {plan.features.map((f, j) => (
+                {(typeof plan.features === 'string' ? plan.features.split('\n').filter(Boolean) : plan.features).map((f, j) => (
                   <li key={j} className="flex items-start gap-2 text-sm">
                     <Check className={cn('w-4 h-4 flex-shrink-0 mt-0.5', plan.featured ? 'text-indigo-200' : 'text-indigo-600')} />
                     <span className={plan.featured ? 'text-indigo-100' : 'text-gray-600'}>{f}</span>
@@ -125,9 +125,9 @@ export const PricingBlock: ComponentConfig<PricingBlockProps> = {
         badge: { type: 'text', label: '배지 텍스트' },
         ctaText: { type: 'text', label: 'CTA 버튼 텍스트' },
         ctaLink: { type: 'text', label: 'CTA 링크' },
-        features: { type: 'array', label: '포함 기능', arrayFields: { item: { type: 'text', label: '기능' } }, defaultItemProps: { item: '새 기능' } as never },
+        features: { type: 'textarea', label: '포함 기능 (줄바꿈으로 구분)' },
       },
-      defaultItemProps: { name: '새 플랜', price: '₩0', period: '/월', description: '설명', features: [], featured: false },
+      defaultItemProps: { name: '새 플랜', price: '₩0', period: '/월', description: '설명', features: '', featured: false },
     },
   },
   defaultProps: {
@@ -135,9 +135,9 @@ export const PricingBlock: ComponentConfig<PricingBlockProps> = {
     subtitle: '숨겨진 비용 없이 팀에 맞는 플랜을 선택하세요.',
     background: 'gray',
     plans: [
-      { name: 'Free', price: '₩0', period: '/월', description: '개인 프로젝트', features: ['최대 5개 페이지', '3가지 템플릿', '1GB 스토리지'], featured: false },
-      { name: 'Pro', price: '₩15,000', period: '/월', description: '성장하는 팀', features: ['무제한 페이지', '모든 템플릿', '50GB 스토리지', 'API 접근', '우선 지원'], featured: true, badge: '가장 인기' },
-      { name: 'Enterprise', price: '문의', period: '', description: '대규모 조직', features: ['Pro의 모든 기능', '무제한 팀원', 'SSO & SAML', '전담 지원'], featured: false },
+      { name: 'Free', price: '₩0', period: '/월', description: '개인 프로젝트', features: '최대 5개 페이지\n3가지 템플릿\n1GB 스토리지', featured: false },
+      { name: 'Pro', price: '₩15,000', period: '/월', description: '성장하는 팀', features: '무제한 페이지\n모든 템플릿\n50GB 스토리지\nAPI 접근\n우선 지원', featured: true, badge: '가장 인기' },
+      { name: 'Enterprise', price: '문의', period: '', description: '대규모 조직', features: 'Pro의 모든 기능\n무제한 팀원\nSSO & SAML\n전담 지원', featured: false },
     ],
   },
   render: PricingBlockComponent,

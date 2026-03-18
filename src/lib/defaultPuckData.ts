@@ -61,9 +61,9 @@ export const LANDING_PAGE_PUCK_DATA: PuckPageData = {
         title: '투명한 가격 정책',
         subtitle: '숨겨진 비용 없이 팀에 맞는 플랜을 선택하세요.',
         plans: [
-          { name: 'Free', price: '₩0', period: '/월', description: '개인 프로젝트', features: ['최대 5개 페이지', '3가지 템플릿', '1GB 스토리지'], featured: false },
-          { name: 'Pro', price: '₩15,000', period: '/월', description: '성장하는 팀', features: ['무제한 페이지', '모든 템플릿', '50GB 스토리지', 'API 접근', '우선 지원'], featured: true },
-          { name: 'Enterprise', price: '문의', period: '', description: '대규모 조직', features: ['Pro의 모든 기능', '무제한 팀원', 'SSO & SAML', '전담 지원'], featured: false },
+          { name: 'Free', price: '₩0', period: '/월', description: '개인 프로젝트', features: '최대 5개 페이지\n3가지 템플릿\n1GB 스토리지', featured: false },
+          { name: 'Pro', price: '₩15,000', period: '/월', description: '성장하는 팀', features: '무제한 페이지\n모든 템플릿\n50GB 스토리지\nAPI 접근\n우선 지원', featured: true },
+          { name: 'Enterprise', price: '문의', period: '', description: '대규모 조직', features: 'Pro의 모든 기능\n무제한 팀원\nSSO & SAML\n전담 지원', featured: false },
         ],
       },
     },

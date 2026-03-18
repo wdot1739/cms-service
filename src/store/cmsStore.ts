@@ -275,9 +275,9 @@ const SAMPLE_PAGES: Page[] = [
             subtitle: 'Choose the plan that fits your needs.',
             background: 'gray',
             plans: [
-              { name: 'Free', price: '$0', period: '/mo', description: 'For individuals', features: ['5 pages', 'Basic templates'], featured: false },
-              { name: 'Pro', price: '$15', period: '/mo', description: 'For teams', features: ['Unlimited pages', 'All templates', 'Priority support'], featured: true },
-              { name: 'Enterprise', price: 'Contact', period: '', description: 'For organizations', features: ['Everything in Pro', 'SSO', 'Dedicated support'], featured: false },
+              { name: 'Free', price: '$0', period: '/mo', description: 'For individuals', features: '5 pages\nBasic templates', featured: false },
+              { name: 'Pro', price: '$15', period: '/mo', description: 'For teams', features: 'Unlimited pages\nAll templates\nPriority support', featured: true },
+              { name: 'Enterprise', price: 'Contact', period: '', description: 'For organizations', features: 'Everything in Pro\nSSO\nDedicated support', featured: false },
             ],
           },
         },
@@ -460,9 +460,9 @@ export const useCMSStore = create<CMSState>()(
     }),
     {
       name: 'flowcms-data',
-      version: 4,
+      version: 5,
       migrate: (persistedState: unknown, version: number) => {
-        if (version < 4) {
+        if (version < 5) {
           return undefined as unknown as CMSState;
         }
         return persistedState as CMSState;

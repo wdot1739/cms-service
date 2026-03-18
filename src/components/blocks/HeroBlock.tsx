@@ -14,6 +14,7 @@ interface HeroBlockProps {
   ctaText: string;
   ctaLink: string;
   secondaryText: string;
+  secondaryLink: string;
   background: 'gradient' | 'white' | 'dark';
   badge: string;
   stats: HeroStat[];
@@ -25,6 +26,7 @@ export function HeroBlockComponent({
   ctaText = '무료로 시작하기',
   ctaLink = '/login',
   secondaryText = '데모 보기',
+  secondaryLink = '/login',
   background = 'gradient',
   badge = 'AI-Powered CMS Platform',
   stats = [],
@@ -67,7 +69,7 @@ export function HeroBlockComponent({
             </Button>
           </Link>
           {secondaryText && (
-            <Link to="/login">
+            <Link to={secondaryLink}>
               <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 bg-transparent px-8 h-12 gap-2">
                 <Play className="w-4 h-4" />
                 {secondaryText}
@@ -99,6 +101,7 @@ export const HeroBlock: ComponentConfig<HeroBlockProps> = {
     ctaText: { type: 'text', label: 'CTA 버튼 텍스트' },
     ctaLink: { type: 'text', label: 'CTA 링크' },
     secondaryText: { type: 'text', label: '보조 버튼 텍스트' },
+    secondaryLink: { type: 'text', label: '보조 버튼 링크' },
     background: {
       type: 'select',
       label: '배경',
@@ -124,6 +127,7 @@ export const HeroBlock: ComponentConfig<HeroBlockProps> = {
     ctaText: '무료로 시작하기',
     ctaLink: '/login',
     secondaryText: '데모 보기',
+    secondaryLink: '/login',
     background: 'gradient',
     badge: 'AI-Powered CMS Platform',
     stats: [
