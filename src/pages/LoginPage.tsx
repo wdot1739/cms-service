@@ -8,7 +8,7 @@ import { Layers, Eye, EyeOff, ArrowRight, Sparkles } from 'lucide-react';
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login, loginDemo } = useAuthStore();
+  const { login, loginDemo, register } = useAuthStore();
   const [tab, setTab] = useState<'login' | 'register'>('login');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -25,11 +25,16 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (!email || !password) { setError('이메일과 비밀번호를 입력해주세요.'); return; }
-    if (tab === 'register' && !name) { setError('이름을 입력해주세요.'); return; }
+    if (!email || !password) { setError('이메일과 비밀번호를 입력해주세요.'); setLoading(false); return; }
+    if (tab === 'register' && !name) { setError('이름을 입력해주세요.'); setLoading(false); return; }
     setLoading(true);
     await new Promise((r) => setTimeout(r, 500));
-    login(email, password);
+    if (tab === 'register') {
+      register(name, email, password);
+    } else {
+      login(email, password);
+    }
+    setLoading(false);
     navigate('/dashboard');
   };
 

@@ -20,7 +20,7 @@ const THEMES: { id: ThemeId; name: string; desc: string }[] = [
 ];
 
 export default function SettingsPage() {
-  const { user } = useAuthStore();
+  const { user, updateUser } = useAuthStore();
   const { workspace, setWorkspace } = useCMSStore();
   const [saved, setSaved] = useState(false);
   const [profileSaved, setProfileSaved] = useState(false);
@@ -80,6 +80,7 @@ export default function SettingsPage() {
             <div className="pt-2">
               <Button
                 onClick={() => {
+                  updateUser({ name: profileName });
                   setProfileSaved(true);
                   setTimeout(() => setProfileSaved(false), 2000);
                 }}

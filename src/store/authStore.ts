@@ -8,6 +8,7 @@ interface AuthState {
   login: (email: string, password: string) => boolean;
   loginDemo: () => void;
   register: (name: string, email: string, password: string) => void;
+  updateUser: (updates: Partial<User>) => void;
   logout: () => void;
 }
 
@@ -53,6 +54,7 @@ export const useAuthStore = create<AuthState>()(
         };
         set({ user, isAuthenticated: true });
       },
+      updateUser: (updates) => set((s) => ({ user: s.user ? { ...s.user, ...updates } : null })),
       logout: () => set({ user: null, isAuthenticated: false }),
     }),
     { name: 'flowcms-auth' }

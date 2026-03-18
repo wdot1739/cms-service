@@ -28,8 +28,8 @@ export default function App() {
         }>
           <Route index element={<DashboardHome />} />
           <Route path="pages" element={<PagesListPage />} />
-          <Route path="editor/:pageId" element={<EditorPage />} />
           <Route path="editor/new" element={<EditorPage />} />
+          <Route path="editor/:pageId" element={<EditorPage />} />
           <Route path="templates" element={<TemplatesPage />} />
           <Route path="media" element={<MediaPage />} />
           <Route path="settings" element={<SettingsPage />} />

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Puck, type Data } from '@measured/puck';
 import '@measured/puck/puck.css';
@@ -36,6 +36,7 @@ export default function EditorPage() {
   const [saved, setSaved] = useState(false);
 
   const initialData: Data = (existingPage?.puckData as Data) || (BLANK_PAGE_PUCK_DATA as Data);
+  const currentDataRef = useRef<Data>(initialData);
 
   const handleSave = useCallback((data: Data) => {
     const puckData = data as unknown as PuckPageData;
@@ -105,6 +106,14 @@ export default function EditorPage() {
         </div>
 
         <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handleSave(currentDataRef.current)}
+            className="gap-1.5"
+          >
+            저장
+          </Button>
           {currentPageId && (
             <Button
               variant="outline"
@@ -120,7 +129,7 @@ export default function EditorPage() {
             size="sm"
             disabled={status === 'published'}
             className="bg-indigo-600 hover:bg-indigo-700 text-white gap-1.5"
-            onClick={() => {}}
+            onClick={() => handlePublish(currentDataRef.current)}
           >
             <Globe className="w-4 h-4" />
             {status === 'published' ? '발행됨' : '발행하기'}
@@ -133,6 +142,7 @@ export default function EditorPage() {
         <Puck
           config={puckConfig}
           data={initialData}
+          onChange={(data) => { currentDataRef.current = data; }}
           onPublish={async (data) => {
             handlePublish(data);
           }}

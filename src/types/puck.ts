@@ -9,7 +9,6 @@ export type PuckBlockType =
   | 'ImageBlock'
   | 'QuoteBlock'
   | 'DividerBlock'
-  | 'ColumnsBlock'
   | 'CodeBlock'
   | 'HowItWorksBlock';
 

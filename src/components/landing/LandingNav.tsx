@@ -31,10 +31,10 @@ export default function LandingNav() {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {['Features', 'How It Works', 'Pricing', 'Docs'].map((item) => (
+            {['Features', 'How It Works', 'Pricing', 'Testimonials'].map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase().replace(' ', '-')}`}
+                href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
                 className={cn(
                   'text-sm font-medium transition-colors hover:text-indigo-400',
                   scrolled ? 'text-gray-600' : 'text-white/80'
@@ -73,10 +73,10 @@ export default function LandingNav() {
       {mobileOpen && (
         <div className="md:hidden bg-white border-b shadow-lg">
           <div className="px-4 py-4 space-y-3">
-            {['Features', 'How It Works', 'Pricing', 'Docs'].map((item) => (
+            {['Features', 'How It Works', 'Pricing', 'Testimonials'].map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase().replace(' ', '-')}`}
+                href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
                 className="block text-gray-700 hover:text-indigo-600 font-medium"
                 onClick={() => setMobileOpen(false)}
               >

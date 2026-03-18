@@ -341,6 +341,15 @@ export const useCMSStore = create<CMSState>()(
         }, ...s.activityLog].slice(0, 100),
       })),
     }),
-    { name: 'flowcms-data' }
+    {
+      name: 'flowcms-data',
+      version: 3,
+      migrate: (persistedState: unknown, version: number) => {
+        if (version < 3) {
+          return undefined as unknown as CMSState;
+        }
+        return persistedState as CMSState;
+      },
+    }
   )
 );
